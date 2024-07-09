@@ -70,7 +70,7 @@ const AttractionWrapper = () => {
 
   return (<>
     <Attraction title="Top Designers" data={dataOne} />
-    <Attraction title="Top Developers" data={dataTwo} />
+    {/* <Attraction title="Top Developers" data={dataTwo} /> */}
   </>
   
   )

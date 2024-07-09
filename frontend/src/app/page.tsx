@@ -12,8 +12,8 @@ export default function Home() {
       <Navbar/>
       <Search/>
       <Header/>
-      <Package/>
       <AttractionWrapper/>
+      <Package/>
       <Catchy/>
       <Footer/>
     </main>
