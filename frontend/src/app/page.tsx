@@ -5,6 +5,7 @@ import { Header } from "@/components/shared/Header";
 import { Navbar } from "@/components/shared/Navbar";
 import { Package } from "@/components/shared/Package";
 import { Search } from "@/components/shared/Search";
+import CookiesPrompt from "@/components/shared/CookiesPrompt";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Package/>
       <Catchy/>
       <Footer/>
+      <CookiesPrompt />
     </main>
   );
 }
