@@ -8,7 +8,7 @@ import { Search } from "@/components/shared/Search";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen overflow-x-hidden flex-col">
       <Navbar/>
       <Search/>
       <Header/>

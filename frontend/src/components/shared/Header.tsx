@@ -85,7 +85,7 @@ export const Header = () => {
       </header>
       <div className="">
             <h1 className="text-5xl px-10 py-10 mt-20 md:text-center md:mt-10 lg:mt-10 lg:text-center  ">Our main goal is to set your business on the hills</h1>
-           <div className="flex p-10 gap-10 ">
+           <div className="flex p-10 gap-10 overflow-auto ">
            {datax.map((item) => (
                <div  key={item.id} className='w-[30vw] h-[20vh]  '>
                <Image
