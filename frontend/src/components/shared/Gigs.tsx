@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
-
 const projects = [
   {
     id: 0,
@@ -95,22 +93,76 @@ const projects = [
     img: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNvZnR3YXJlJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDI%3D",
   },
 ];
-
-type Props = {
-  title: string;
-};
-
-export const Package = ({ title }: Props) => {
+const data=[
+  {
+    id: 0,
+    role: "Mobile Developer",
+    projectTitle: "E-commerce App",
+    description: "Developed a comprehensive e-commerce app with seamless user experience, integrated payment gateways, and push notifications. 5 years of experience.",
+    img: "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29mdHdhcmUlMjBkZXZlbG9wbWVudHxlbnwwfHwwfHx8Mg%3D%3D",
+  },
+  {
+    id: 1,
+    role: "UI/UX Designer",
+    projectTitle: "Travel Booking Website",
+    description: "Designed an intuitive and visually appealing travel booking website, focusing on user-centered design principles and responsive layouts. 7 years of experience.",
+    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dHJhdmVsJTIwYm9va2luZyUyMHdlYnNpdGV8ZW58MHx8MHx8fDI%3D",
+  },
+  {
+    id: 2,
+    role: "Backend Engineer",
+    projectTitle: "API for Social Media Platform",
+    description: "Built a scalable and secure API for a social media platform, handling millions of requests per day. 6 years of experience.",
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmFja2VuZCUyMGVuZ2luZWVyfGVufDB8fDB8fHwy",
+  },
+  {
+    id: 3,
+    role: "Frontend Developer",
+    projectTitle: "Real Estate Dashboard",
+    description: "Implemented a dynamic and responsive real estate dashboard using React, integrating interactive maps and property filters. 4 years of experience.",
+    img: "https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c29mdHdhcmUlMjBkZXZlbG9wbWVudHxlbnwwfHwwfHx8Mg%3D%3D",
+  },
+  {
+    id: 4,
+    role: "Cloud Engineer",
+    projectTitle: "Cloud Infrastructure for SaaS",
+    description: "Designed and managed the cloud infrastructure for a SaaS application, ensuring high availability and security. 5 years of experience.",
+    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mdHdhcmUlMjBkZXZlbG9wbWVudHxlbnwwfHwwfHx8Mg%3D%3D",
+  },
+  {
+    id: 5,
+    role: "Graphic Designer",
+    projectTitle: "Brand Identity for Startup",
+    description: "Created a complete brand identity for a tech startup, including logo design, business cards, and social media graphics. 8 years of experience.",
+    img: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNvZnR3YXJlJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDI%3D",
+  },
+]
+const Gigs = () => {
   return (
     <>
-      <p className="text-3xl text-left mt-8 ml-5 md:text-center md:text-5xl lg:text-center lg:text-5xl">
-        {title}
+          <p className="text-left text-3xl mt-8 ml-5 md:text-center md:text-5xl lg:text-center lg:text-5xl">
+       My Portfolio
       </p>
-
-      <div className="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex overflow-x-auto space-x-4 px-6 py-2 mt-5">
+        {data.map((item) => (
+          <div key={item.id} className="flex-shrink-0  w-[60vw] h-[30vh] relative md:w-[30vw] lg:w-[30vw]">
+            <Image
+              src={item.img}
+              alt={item.role}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-2xl"
+            />
+          </div>
+        ))}
+      </div>
+      <p className="text-left text-3xl my-8 ml-5 md:text-center md:text-5xl lg:text-center lg:text-5xl">
+       Services and Products
+      </p>
+      <div className="px-10 flex overflow-x-auto md:grid-cols-2 md:grid lg:grid-cols-3 lg:grid gap-6">
         {projects.map((item) => (
           <Link key={item.id} href="/profile" passHref>
-            <div className="mb-10 p-5 border rounded-lg shadow-lg">
+            <div className="mb-10 p-5 border w-[60vw] rounded-lg shadow-lg md:w-[30vw] lg:w-[30vw]">
               <Image
                 src={item.img}
                 alt={item.role}
@@ -128,3 +180,4 @@ export const Package = ({ title }: Props) => {
     </>
   );
 };
+export default Gigs;
