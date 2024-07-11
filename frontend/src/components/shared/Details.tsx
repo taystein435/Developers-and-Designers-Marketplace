@@ -34,7 +34,7 @@ const Details = () => {
           className='w-16 h-16 rounded-full object-cover'
           alt="Picture of the author"
         />
-        <div className="p-1 mx-3 w-[40vw]">
+        <div className=" mx-2 w-[40vw]">
           <h2 className="text-xl">Taiwo Babatunde</h2>
           <h2 className="text-l text-slate-300">Backend Engineer</h2>
           <p className="text-sm text-slate-400 ">{followers} followers</p>
