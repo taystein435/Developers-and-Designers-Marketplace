@@ -14,7 +14,7 @@ export default function Home() {
       <Search/>
       <Header/>
       <AttractionWrapper/>
-      <Package/>
+      <Package title="Popular Services"/>
       <Catchy/>
       <Footer/>
       <CookiesPrompt />

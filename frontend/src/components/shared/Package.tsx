@@ -94,12 +94,15 @@ const projects = [
     img: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNvZnR3YXJlJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDI%3D",
   },
 ]
+type Props = {
+  title: string;
+};
 
-export const Package = () => {
+export const Package = ({title}:Props) => {
   return (
     <>
       <p className="text-3xl text-left mt-8 ml-5 md:text-center md:text-5xl lg:text-center lg:text-5xl">
-        Popular Services
+        {title}
       </p>
       <div className="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((item) => (
