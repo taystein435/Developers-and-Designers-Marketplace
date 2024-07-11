@@ -40,7 +40,7 @@ const Details = () => {
           <p className="text-sm text-slate-400 ">{followers} followers</p>
         </div>
         <Button
-          className="bg-white w-[40vw] my-2 text-black border-none rounded-2xl md:ml-[40vw] md:w-[20vw] lg:w-[20vw]lg:ml-[40vw] xl:ml-[60vw] "
+          className="bg-white w-[30vw] my-2 text-black border-none rounded-2xl md:ml-[40vw] md:w-[20vw] lg:w-[20vw]lg:ml-[40vw] xl:ml-[60vw] "
           variant="outline"
           onClick={handleFollow}
         >
