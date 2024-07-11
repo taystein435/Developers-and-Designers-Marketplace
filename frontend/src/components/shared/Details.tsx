@@ -31,10 +31,10 @@ const Details = () => {
           src="https://images.unsplash.com/photo-1639747280929-e84ef392c69a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHByb2ZpbGUlMjBwaWN0dXJlfGVufDB8fDB8fHwy"
           width={500}
           height={500}
-          className='w-14 h-14 rounded-full object-cover'
+          className='w-16 h-16 rounded-full object-cover'
           alt="Picture of the author"
         />
-        <div className="p-1 mx-3">
+        <div className="p-1 mx-3 w-[40vw]">
           <h2 className="text-xl">Taiwo Babatunde</h2>
           <h2 className="text-l text-slate-300">Backend Engineer</h2>
           <p className="text-sm text-slate-400 ">{followers} followers</p>
