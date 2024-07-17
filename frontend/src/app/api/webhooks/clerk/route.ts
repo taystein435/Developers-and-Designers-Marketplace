@@ -1,7 +1,9 @@
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
-import { WebhookEvent } from '@clerk/nextjs/server';
+import { UserJSON, WebhookEvent } from '@clerk/nextjs/server';
 import prisma from '@/lib/client';
+
+
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -42,44 +44,53 @@ export async function POST(req: Request) {
   console.log(`Webhook with an ID of ${data.id} and type of ${eventType}`);
   console.log('Webhook body:', body);
 
-  // Safely extract the necessary fields
-  const email = data?.email_addresses?.[0]?.email_address;
-  const firstName = data?.first_name;
-  const lastName = data?.last_name;
-  const username = firstName && lastName ? `${firstName} ${lastName}` : null;
-
-  if (!username || !email) {
-    console.error('Missing required user fields', { username, email });
-    return new Response('Missing required user fields', { status: 400 });
+  // Type guard to ensure data is of type UserJSON
+  function isUserJSON(data: any): data is UserJSON {
+    return (data as UserJSON).first_name !== undefined;
   }
 
-  if (eventType === "user.created") {
-    try {
-      await prisma.user.create({
-        data: {
-          id: data.id,
-          username,
-          email
-        },
-      });
-      return new Response("User has been created!", { status: 200 });
-    } catch (err) {
-      console.error('Failed to create the user:', err);
-      return new Response("Failed to create the user!", { status: 500 });
-    }
-  }
+  if (isUserJSON(data)) {
+    const email = data?.email_addresses?.[0]?.email_address;
+    const firstName = data.first_name;
+    const lastName = data.last_name;
+    const username = firstName && lastName ? `${firstName} ${lastName}` : null;
 
-  if (eventType === "user.updated") {
-    try {
-      await prisma.user.update({
-        where: { id: data.id },
-        data: { username, email },
-      });
-      return new Response("User has been updated!", { status: 200 });
-    } catch (err) {
-      console.error('Failed to update the user:', err);
-      return new Response("Failed to update the user!", { status: 500 });
+    if (!username || !email) {
+      console.error('Missing required user fields', { username, email });
+      return new Response('Missing required user fields', { status: 400 });
     }
+
+    if (eventType === "user.created") {
+      try {
+        await prisma.user.create({
+          data: {
+            id: data.id,
+            username,
+            email
+          },
+        });
+        return new Response("User has been created!", { status: 200 });
+      } catch (err) {
+        console.error('Failed to create the user:', err);
+        return new Response("Failed to create the user!", { status: 500 });
+      }
+    }
+
+    if (eventType === "user.updated") {
+      try {
+        await prisma.user.update({
+          where: { id: data.id },
+          data: { username, email },
+        });
+        return new Response("User has been updated!", { status: 200 });
+      } catch (err) {
+        console.error('Failed to update the user:', err);
+        return new Response("Failed to update the user!", { status: 500 });
+      }
+    }
+  } else {
+    console.error('Webhook data is not of type UserJSON', { data });
+    return new Response('Webhook data is not of type UserJSON', { status: 400 });
   }
 
   return new Response("Webhook received", { status: 200 });
