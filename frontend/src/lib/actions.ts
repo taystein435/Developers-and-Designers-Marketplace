@@ -1,13 +1,21 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { prisma } from "./client";
+import prisma from "./client";
+
+
+// Define types for the functions
+type SwitchFollow = (profileId: string) => Promise<void>;
+type SendMessage = (receiverId: string, content: string) => Promise<void>;
+type AddProject = (profileId: string, title: string, description: string) => Promise<void>;
+type AddProjectImage = (projectId: string, imageUrl: string) => Promise<void>;
+type BookService = (profileId: string, bookingDate: Date, status: string) => Promise<void>;
+type LeaveReview = (profileId: string, rating: number, comment: string) => Promise<void>;
 
 // Function to toggle follow/unfollow a profile
-export const switchFollow = async (profileId) => {
+export const switchFollow: SwitchFollow = async (profileId) => {
   const { userId: currentUserId } = auth();
 
   if (!currentUserId) {
@@ -21,7 +29,6 @@ export const switchFollow = async (profileId) => {
         followingId: profileId,
       },
     });
-
 
     if (existingFollow) {
       await prisma.follow.delete({
@@ -44,7 +51,7 @@ export const switchFollow = async (profileId) => {
 };
 
 // Function to send a message
-export const sendMessage = async (receiverId, content) => {
+export const sendMessage: SendMessage = async (receiverId, content) => {
   const { userId: currentUserId } = auth();
 
   if (!currentUserId) {
@@ -67,7 +74,7 @@ export const sendMessage = async (receiverId, content) => {
 };
 
 // Function to add a project
-export const addProject = async (profileId, title, description) => {
+export const addProject: AddProject = async (profileId, title, description) => {
   const { userId: currentUserId } = auth();
 
   if (!currentUserId) {
@@ -90,7 +97,7 @@ export const addProject = async (profileId, title, description) => {
 };
 
 // Function to add an image to a project
-export const addProjectImage = async (projectId, imageUrl) => {
+export const addProjectImage: AddProjectImage = async (projectId, imageUrl) => {
   try {
     await prisma.projectImage.create({
       data: {
@@ -105,7 +112,7 @@ export const addProjectImage = async (projectId, imageUrl) => {
 };
 
 // Function to book a service from a profile
-export const bookService = async (profileId, bookingDate, status) => {
+export const bookService: BookService = async (profileId, bookingDate, status) => {
   const { userId: currentUserId } = auth();
 
   if (!currentUserId) {
@@ -128,7 +135,7 @@ export const bookService = async (profileId, bookingDate, status) => {
 };
 
 // Function to leave a review for a profile
-export const leaveReview = async (profileId, rating, comment) => {
+export const leaveReview: LeaveReview = async (profileId, rating, comment) => {
   const { userId: currentUserId } = auth();
 
   if (!currentUserId) {
