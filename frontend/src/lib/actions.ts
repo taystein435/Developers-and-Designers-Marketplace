@@ -5,7 +5,6 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import prisma from "./client";
 
-
 // Define types for the functions
 type SwitchFollow = (profileId: string) => Promise<void>;
 type SendMessage = (receiverId: string, content: string) => Promise<void>;
@@ -13,6 +12,14 @@ type AddProject = (profileId: string, title: string, description: string) => Pro
 type AddProjectImage = (projectId: string, imageUrl: string) => Promise<void>;
 type BookService = (profileId: string, bookingDate: Date, status: string) => Promise<void>;
 type LeaveReview = (profileId: string, rating: number, comment: string) => Promise<void>;
+type AddProfile = (profileData: {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
+  bannerImage: string;
+  description: string;
+}) => Promise<void>;
 
 // Function to toggle follow/unfollow a profile
 export const switchFollow: SwitchFollow = async (profileId) => {
@@ -150,6 +157,25 @@ export const leaveReview: LeaveReview = async (profileId, rating, comment) => {
         rating,
         comment,
         createdAt: new Date(),
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong!");
+  }
+};
+
+// Function to add a profile
+export const addProfile: AddProfile = async ({ userId, firstName, lastName, profilePicture, bannerImage, description }) => {
+  try {
+    await prisma.profile.create({
+      data: {
+        userId,
+        firstName,
+        lastName,
+        profilePicture,
+        bannerImage,
+        description,
       },
     });
   } catch (err) {
