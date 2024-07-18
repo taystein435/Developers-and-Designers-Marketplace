@@ -56,7 +56,13 @@ const Page = () => {
 
   return (
     
-    <>       <h1 className="text-3xl my-10 md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Contact Us</h1>
+    <>    
+     <div   className="h-[60vh] w-screen bg-cover bg-center relative px-5 flex justify-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dHJhdmVsJTIwYm9va2luZyUyMHdlYnNpdGV8ZW58MHx8MHx8fDI%3D')",
+        }}></div>
+       <h1 className="text-3xl my-10 md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Contact Us</h1>
    
    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="container mx-auto max-w-lg mt-8">

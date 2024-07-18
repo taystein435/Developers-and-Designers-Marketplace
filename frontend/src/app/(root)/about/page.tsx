@@ -1,6 +1,11 @@
 const Page = () => {
   return (
-    <section className="mt-10">
+    <section >
+      <div   className="h-[60vh] w-screen bg-cover bg-center relative px-5 flex justify-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjZ8fGRldmVsb3BlcnxlbnwwfHwwfHx8MA%3D%3D')",
+        }}></div>
       <h1 className="text-3xl my-10 md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center text-white">About Dev Hub</h1>
       <div className="flex justify-center items-center p-4">
         <div className="max-w-3xl text-gray-200 text-sm leading-relaxed">
