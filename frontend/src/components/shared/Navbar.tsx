@@ -73,6 +73,9 @@ export const Navbar = () => {
             <Link href="/contact">
               <p className="pt-5">Contact</p>
             </Link>
+            <Link href="/faq">
+              <p className="pt-5">FAQs</p>
+            </Link>
           </SheetContent>
         </Sheet>
       </div>
