@@ -55,7 +55,8 @@ const Page = () => {
   }
 
   return (
-    <> <h1 className="text-3xl md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Contact Us</h1>
+    
+    <>       <h1 className="text-3xl my-10 md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Contact Us</h1>
    
    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="container mx-auto max-w-lg mt-8">

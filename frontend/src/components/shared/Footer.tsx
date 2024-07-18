@@ -2,7 +2,7 @@ import { FacebookIcon, InstagramIcon, X, YoutubeIcon } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="md:mt-30 xl:30 text-white py-12">
+    <footer className="mt-24 md:mt-30 xl:30 text-white py-12">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
         <div className="text-center md:text-left space-y-4 md:space-y-2">
           <p className="hover:text-gray-400 cursor-pointer">Home</p>

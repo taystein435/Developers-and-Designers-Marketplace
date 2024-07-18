@@ -7,8 +7,8 @@ import {
 
 const Page = () => {
   return (
-    <section className="">
-      <h1 className="text-3xl md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Frequently Asked Questions</h1>
+    <section className="mt-10 ">
+      <h1 className="text-3xl my-10 md:text-5xl xl:text-5xl lg:text-5xl font-bold text-center  text-white">Frequently Asked Questions</h1>
       <div className="flex justify-center items-center p-4">
         <Accordion type="single" collapsible >
           <AccordionItem value="item-1">
