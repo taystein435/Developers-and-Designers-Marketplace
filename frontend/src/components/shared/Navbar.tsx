@@ -61,9 +61,6 @@ export const Navbar = () => {
             <Link href="/about">
               <p className="pt-5">About Us</p>
             </Link>
-            <Link href="/features">
-              <p className="pt-5">Features</p>
-            </Link>
             <Link href="/developers">
               <p className="pt-5">Developers</p>
             </Link>
