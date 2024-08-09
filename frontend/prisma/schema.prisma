@@ -18,6 +18,7 @@ model User {
   id            String       @id @default(uuid())
   username      String
   email         String
+  role          String
   createdAt     DateTime     @default(now())
   profiles      Profile[]
   messagesSent  Message[]    @relation("SentMessages")
