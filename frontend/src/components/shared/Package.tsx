@@ -12,7 +12,7 @@ export const Package = async ({ title }: Props) => {
     include: {
       profile: {
         include: {
-          user: true,  // Include user data to access roles
+          user: true,  
         },
       },
     },

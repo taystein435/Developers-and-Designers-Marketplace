@@ -3,8 +3,6 @@ import { headers } from 'next/headers';
 import { UserJSON, WebhookEvent } from '@clerk/nextjs/server';
 import prisma from '@/lib/client';
 
-
-
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
@@ -44,7 +42,6 @@ export async function POST(req: Request) {
   console.log(`Webhook with an ID of ${data.id} and type of ${eventType}`);
   console.log('Webhook body:', body);
 
-  // Type guard to ensure data is of type UserJSON
   function isUserJSON(data: any): data is UserJSON {
     return (data as UserJSON).first_name !== undefined;
   }
@@ -54,6 +51,7 @@ export async function POST(req: Request) {
     const firstName = data.first_name;
     const lastName = data.last_name;
     const username = firstName && lastName ? `${firstName} ${lastName}` : null;
+    const role =  'user'; // Use a default value or adjust based on your data
 
     if (!username || !email) {
       console.error('Missing required user fields', { username, email });
@@ -66,7 +64,8 @@ export async function POST(req: Request) {
           data: {
             id: data.id,
             username,
-            email
+            email,
+            role, // Add the role field here
           },
         });
         return new Response("User has been created!", { status: 200 });
@@ -80,7 +79,7 @@ export async function POST(req: Request) {
       try {
         await prisma.user.update({
           where: { id: data.id },
-          data: { username, email },
+          data: { username, email, role }, // Add the role field here
         });
         return new Response("User has been updated!", { status: 200 });
       } catch (err) {
