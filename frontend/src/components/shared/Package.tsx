@@ -30,7 +30,7 @@ export const Package = async ({ title }: Props) => {
             <div className="mb-10 p-5 border rounded-lg shadow-lg">
               {project.profile.profilePicture && (
                 <Image
-                  src={project.profile.bannerImage}
+                  src={project.profile.profilePicture}
                   alt={project.profile.firstName + " " + project.profile.lastName}
                   className="rounded-2xl h-40 w-full object-cover"
                   width={500}

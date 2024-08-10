@@ -69,7 +69,7 @@ const projects = [
     role: "SEO Specialist",
     projectTitle: "SEO Strategy for E-commerce",
     description: "Developed and executed an SEO strategy that increased organic search traffic by 50% for an e-commerce site. 5 years of experience.",
-    img: "https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNvZnR3YXJlJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDI%3D",
+    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mdHdhcmUlMjBkZXZlbG9wbWVudHxlbnwwfHwwfHx8Mg%3D%3D",
   },
   {
     id: 10,

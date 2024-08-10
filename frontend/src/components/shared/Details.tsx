@@ -33,7 +33,7 @@ const Details = ({ profile }: DetailsProps) => {
   return (
     <div>
       <Image
-        src={profile.bannerImage}
+        src={profile.profilePicture}
         width={500}
         height={500}
         className='w-screen h-[50vh] rounded-2xl px-1 object-cover'
@@ -41,7 +41,7 @@ const Details = ({ profile }: DetailsProps) => {
       />
       <div className="flex p-5">
         <Image
-          src={profile.profilePicture}
+          src={profile.bannerImage}
           width={500}
           height={500}
           className='w-16 h-16 rounded-full object-cover'

@@ -24,7 +24,8 @@ const Profile = ({ profile }: ProfileProps) => {
     <div>
       <Details profile={profile} />
       <Gigs />
-      <Chat />
+      <Chat receiverId={profile.id} />
+
       <ReviewList />
     </div>
   );

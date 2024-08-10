@@ -57,7 +57,6 @@ export const switchFollow: SwitchFollow = async (profileId) => {
   }
 };
 
-// Function to send a message
 export const sendMessage: SendMessage = async (receiverId, content) => {
   const { userId: currentUserId } = auth();
 
@@ -79,6 +78,7 @@ export const sendMessage: SendMessage = async (receiverId, content) => {
     throw new Error("Something went wrong!");
   }
 };
+
 
 // Function to add a project
 export const addProject: AddProject = async (profileId, title, description) => {
