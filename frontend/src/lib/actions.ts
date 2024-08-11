@@ -74,10 +74,11 @@ export const sendMessage: SendMessage = async (receiverId, content) => {
       },
     });
   } catch (err) {
-    console.log(err);
-    throw new Error("Something went wrong!");
+    console.error('Failed to send message:', err); // Log the actual error
+    throw new Error("Something went wrong!"); // You can provide more context based on the error
   }
 };
+
 
 
 // Function to add a project

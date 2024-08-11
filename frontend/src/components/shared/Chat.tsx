@@ -1,10 +1,22 @@
 "use client"
 import React, { useState } from 'react';
 import { sendMessage } from '@/lib/actions';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 const Chat = ({ receiverId }:{receiverId:string}) => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [message, setMessage] = useState('');
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const handleButtonClick = () => {
     setIsInputVisible(!isInputVisible);
@@ -16,7 +28,7 @@ const Chat = ({ receiverId }:{receiverId:string}) => {
         await sendMessage(receiverId, message);
         setMessage(''); // Clear the message input after sending
         setIsInputVisible(false); // Optionally hide the input after sending
-        alert('Message sent successfully!');
+        setIsAlertVisible(true); // Show the alert dialog
       } catch (error) {
         console.error('Failed to send message:', error);
         alert('Failed to send message');
@@ -51,6 +63,22 @@ const Chat = ({ receiverId }:{receiverId:string}) => {
           </button>
         </div>
       )}
+      
+      <AlertDialog open={isAlertVisible} onOpenChange={setIsAlertVisible}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Message sent successfully!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your message has been sent to the Developer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setIsAlertVisible(false)}>
+              Close
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
