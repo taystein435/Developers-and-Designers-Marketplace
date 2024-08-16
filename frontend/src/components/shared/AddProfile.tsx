@@ -1,20 +1,29 @@
-"use client";
-
 import { useUser } from "@clerk/nextjs";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
-
-import { addProfile } from "@/lib/actions"; 
-import { toast } from "sonner";
+import { addProfile } from "@/lib/actions";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const AddProfile = () => {
   const { user, isLoaded } = useUser();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [profilePicture, setProfilePicture] = useState<any>();
-  const [bannerImage, setBannerImage] = useState<any>();
+  const [profilePicture, setProfilePicture] = useState<any>(null);
+  const [bannerImage, setBannerImage] = useState<any>(null);
   const [description, setDescription] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState(""); 
 
   if (!isLoaded) {
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -24,7 +33,7 @@ const AddProfile = () => {
     return <div className="text-center text-red-500">User is not authenticated</div>;
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const profileData = {
       userId: user.id,
@@ -34,14 +43,17 @@ const AddProfile = () => {
       bannerImage: bannerImage?.secure_url || "",
       description,
     };
-    await addProfile(profileData);
-    toast("Profile Updated Successfully", {
-      description: "Sunday, December 03, 2023 at 9:00 AM",
-      action: {
-        label: "Undo",
-        onClick: () => console.log("Undo"),
-      },
-    });
+    
+    try {
+      await addProfile(profileData);
+      setDialogMessage("Profile Updated Successfully");
+      setShowDialog(true);
+
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+      setDialogMessage("Failed to update profile. Please try again.");
+      setShowDialog(true);
+    }
   };
 
   return (
@@ -79,10 +91,8 @@ const AddProfile = () => {
         ></textarea>
         <CldUploadWidget
           uploadPreset="devhub"
-          onSuccess={(result, { widget }) => {
-            setProfilePicture(result.info);
-            widget.close();
-          }}
+          onSuccess={(result) => setProfilePicture(result.info)}
+          onError={(error) => console.error("Image Upload Error:", error)}
         >
           {({ open }) => (
             <div
@@ -96,10 +106,8 @@ const AddProfile = () => {
         </CldUploadWidget>
         <CldUploadWidget
           uploadPreset="devhub"
-          onSuccess={(result, { widget }) => {
-            setBannerImage(result.info);
-            widget.close();
-          }}
+          onSuccess={(result) => setBannerImage(result.info)}
+          onError={(error) => console.error("Image Upload Error:", error)}
         >
           {({ open }) => (
             <div
@@ -118,6 +126,26 @@ const AddProfile = () => {
           Save Profile
         </button>
       </form>
+
+      {showDialog && (
+        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{dialogMessage}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {dialogMessage.includes("Successfully") 
+                  ? "Your profile has been updated." 
+                  : "An error occurred. Please try again."}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setShowDialog(false)}>
+                OK
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 };

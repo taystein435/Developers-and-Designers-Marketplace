@@ -1,7 +1,6 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import prisma from "./client";
 
@@ -21,7 +20,6 @@ type AddProfile = (profileData: {
   description: string;
 }) => Promise<void>;
 
-// Function to toggle follow/unfollow a profile
 export const switchFollow: SwitchFollow = async (profileId) => {
   const { userId: currentUserId } = auth();
 
@@ -51,8 +49,10 @@ export const switchFollow: SwitchFollow = async (profileId) => {
         },
       });
     }
+
+    revalidatePath(`/profile/${profileId}`);
   } catch (err) {
-    console.log(err);
+    console.error("Error toggling follow:", err);
     throw new Error("Something went wrong!");
   }
 };
@@ -73,15 +73,14 @@ export const sendMessage: SendMessage = async (receiverId, content) => {
         sentAt: new Date(),
       },
     });
+
+    revalidatePath(`/messages`);
   } catch (err) {
     console.error('Failed to send message:', err); 
     throw new Error("Something went wrong!"); 
   }
 };
 
-
-
-// Function to add a project
 export const addProject: AddProject = async (profileId, title, description) => {
   const { userId: currentUserId } = auth();
 
@@ -98,13 +97,14 @@ export const addProject: AddProject = async (profileId, title, description) => {
         createdAt: new Date(),
       },
     });
+
+    revalidatePath(`/profile/${profileId}/projects`);
   } catch (err) {
-    console.log(err);
+    console.error("Error adding project:", err);
     throw new Error("Something went wrong!");
   }
 };
 
-// Function to add an image to a project
 export const addProjectImage: AddProjectImage = async (projectId, imageUrl) => {
   try {
     await prisma.projectImage.create({
@@ -113,13 +113,14 @@ export const addProjectImage: AddProjectImage = async (projectId, imageUrl) => {
         imageUrl,
       },
     });
+
+    revalidatePath(`/project/${projectId}`);
   } catch (err) {
-    console.log(err);
+    console.error("Error adding project image:", err);
     throw new Error("Something went wrong!");
   }
 };
 
-// Function to book a service from a profile
 export const bookService: BookService = async (profileId, bookingDate, status) => {
   const { userId: currentUserId } = auth();
 
@@ -136,13 +137,14 @@ export const bookService: BookService = async (profileId, bookingDate, status) =
         status,
       },
     });
+
+    revalidatePath(`/profile/${profileId}/bookings`);
   } catch (err) {
-    console.log(err);
+    console.error("Error booking service:", err);
     throw new Error("Something went wrong!");
   }
 };
 
-// Function to leave a review for a profile
 export const leaveReview: LeaveReview = async (profileId, rating, comment) => {
   const { userId: currentUserId } = auth();
 
@@ -160,13 +162,14 @@ export const leaveReview: LeaveReview = async (profileId, rating, comment) => {
         createdAt: new Date(),
       },
     });
+
+    revalidatePath(`/profile/${profileId}/reviews`);
   } catch (err) {
-    console.log(err);
+    console.error("Error leaving review:", err);
     throw new Error("Something went wrong!");
   }
 };
 
-// Function to add a profile
 export const addProfile: AddProfile = async ({ userId, firstName, lastName, profilePicture, bannerImage, description }) => {
   try {
     await prisma.profile.create({
@@ -179,8 +182,10 @@ export const addProfile: AddProfile = async ({ userId, firstName, lastName, prof
         description,
       },
     });
+
+    revalidatePath(`/profile/${userId}`);
   } catch (err) {
-    console.log(err);
+    console.error("Error adding profile:", err);
     throw new Error("Something went wrong!");
   }
 };
