@@ -36,10 +36,10 @@ export const Navbar = () => {
                 <SignInButton />
               </Button>
             </SignedOut>
-            <Link href="/profile">
+            <Link href="/details">
               <h1 className="pt-10">Profile</h1>
             </Link>
-            <Link href="/projects">
+            <Link href="/details">
               <p className="pt-5">Projects</p>
             </Link>
             <Link href="/settings">
