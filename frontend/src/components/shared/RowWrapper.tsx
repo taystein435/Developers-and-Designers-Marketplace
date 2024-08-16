@@ -1,8 +1,8 @@
 "use client"
-import { Attraction } from "./Attraction";
+import {  Row } from "./Row";
 import { useState, useEffect } from "react";
 
-const AttractionWrapper = () => {
+const RowWrapper = () => {
     const dataOne = [
       {
         id: 0,
@@ -69,11 +69,11 @@ const AttractionWrapper = () => {
     ];
 
   return (<>
-    <Attraction title="Top Designers and Developers" data={dataOne} />
+    <Row title="Top Designers and Developers" data={dataOne} />
     {/* <Attraction title="Top Developers" data={dataTwo} /> */}
   </>
   
   )
 }
 
-export default AttractionWrapper
+export default RowWrapper

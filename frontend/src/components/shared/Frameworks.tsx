@@ -54,7 +54,7 @@ const frameworks = [
 
 ];
 
-const Catchy = () => {
+const Frameworks = () => {
   return (
     <div>
       <div className="">
@@ -78,4 +78,4 @@ const Catchy = () => {
   );
 };
 
-export default Catchy;
+export default Frameworks;

@@ -9,7 +9,7 @@ type Props = {
   }[];
 };
 
-export const Attraction = ({ title, data }: Props) => {
+export const Row = ({ title, data }: Props) => {
   return (
     <>
           <p className="text-left text-3xl mt-8 ml-5 md:text-center md:text-5xl lg:text-center lg:text-5xl">
