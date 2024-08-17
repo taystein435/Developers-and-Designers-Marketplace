@@ -11,7 +11,8 @@ const Page = () => {
 
   return (
     <div>
-       <AddProfile /> 
+      {user&& 
+      <AddProfile /> }
     </div>
   );
 };

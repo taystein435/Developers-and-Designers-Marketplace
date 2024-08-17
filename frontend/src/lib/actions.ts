@@ -20,6 +20,7 @@ type AddProfile = (profileData: {
   description: string;
 }) => Promise<void>;
 
+
 export const switchFollow: SwitchFollow = async (profileId) => {
   const { userId: currentUserId } = auth();
 
@@ -187,5 +188,80 @@ export const addProfile: AddProfile = async ({ userId, firstName, lastName, prof
   } catch (err) {
     console.error("Error adding profile:", err);
     throw new Error("Something went wrong!");
+  }
+};
+
+// Fetch all users with related data
+export const fetchUsers = async () => {
+  try {
+    return await prisma.user.findMany({
+      include: {
+        profiles: true,
+        messagesSent: true,
+        messagesReceived: true,
+        bookings: true,
+        reviews: true,
+        likes: true,
+        follows: {
+          include: {
+            following: true
+          }
+        },
+        followings: {
+          include: {
+            user: true
+          }
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users.");
+  }
+};
+
+// Update user and profile details
+export const updateUser = async (id: string, userData: { username: string, email: string, role: string }) => {
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: userData
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    throw new Error("Failed to update user.");
+  }
+};
+
+// Update profile details
+export const updateProfile = async (profileId: string, profileData: { firstName: string, lastName: string, profilePicture: string, bannerImage: string, description: string }) => {
+  try {
+    await prisma.profile.update({
+      where: { id: profileId },
+      data: profileData
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw new Error("Failed to update profile.");
+  }
+};
+
+
+// Create, update, and delete user functions
+export const createUser = async (userData: { username: string, email: string, role: string }) => {
+  try {
+    await prisma.user.create({ data: userData });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw new Error("Failed to create user.");
+  }
+};
+
+export const deleteUser = async (id: string) => {
+  try {
+    await prisma.user.delete({ where: { id } });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw new Error("Failed to delete user.");
   }
 };
