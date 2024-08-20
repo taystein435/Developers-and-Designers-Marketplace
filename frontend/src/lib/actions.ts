@@ -3,6 +3,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import prisma from "./client";
+import { createStreamableValue } from 'ai/rsc';
+import { CoreMessage, streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+
 
 // Define types for the functions
 type SwitchFollow = (profileId: string) => Promise<void>;
@@ -265,3 +269,14 @@ export const deleteUser = async (id: string) => {
     throw new Error("Failed to delete user.");
   }
 };
+
+export async function continueConversation(messages: CoreMessage[]) {
+  'use server';
+  const result = await streamText({
+    model: openai('gpt-4o-mini'),
+    messages,
+  });
+  const data = { test: 'hello' };
+  const stream = createStreamableValue(result.textStream);
+  return { message: stream.value, data };
+}
