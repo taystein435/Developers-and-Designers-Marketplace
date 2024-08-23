@@ -1,15 +1,16 @@
-// app/dashboard/[userId]/page.tsx
 import prisma from "@/lib/client";
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
 
-// Fetch user data from Prisma based on user ID
+
 async function getUserData(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },
     include: {
-      profiles: true, // Adjust based on what you need
-      // Include other relations if needed
+      profiles: true,
+      messagesSent: true, // Include messages sent by the user
+      reviews: true, // Include reviews written by the user
     },
   });
 }
@@ -56,20 +57,63 @@ const Dashboard = async ({ params }: { params: { userId: string } }) => {
                 className="w-16 h-16 rounded-full object-cover"
               />
               <div className="ml-3">
-              <p className="mt-2 text-black">
-                Name: {userData.profiles[0].firstName}{" "}
-                {userData.profiles[0].lastName}
-              </p>
-              <p className="mt-1 text-black ">
-                Description: {userData.profiles[0].description}
-              </p>
+                <p className="mt-2 text-black">
+                  Name: {userData.profiles[0].firstName}{" "}
+                  {userData.profiles[0].lastName}
+                </p>
+                <p className="mt-1 text-black ">
+                  Description: {userData.profiles[0].description}
+                </p>
               </div>
-          
             </div>
           </div>
         )}
         {userData.profiles.length === 0 && (
           <p className="mt-4 text-black">No profile information available.</p>
+        )}
+      </div>
+
+      {/* Messages Section */}
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold text-black">Your Messages</h2>
+        {userData.messagesSent.length > 0 ? (
+          <ul className="mt-4 space-y-2">
+            {userData.messagesSent.map((message) => (
+              <li
+                key={message.id}
+                className="p-3 bg-gray-100 rounded-lg text-black"
+              >
+                <p>{message.content}</p>
+                <p className="text-sm text-gray-500">
+                  Sent on: {new Date(message.sentAt).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 text-black">No messages sent yet.</p>
+        )}
+      </div>
+
+      {/* Reviews Section */}
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold text-black">Your Reviews</h2>
+        {userData.reviews.length > 0 ? (
+          <ul className="mt-4 space-y-2">
+            {userData.reviews.map((review: { id: Key | null | undefined; comment: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; createdAt: string | number | Date; }) => (
+              <li
+                key={review.id}
+                className="p-3 bg-gray-100 rounded-lg text-black"
+              >
+                <p>{review.comment}</p>
+                <p className="text-sm text-gray-500">
+                  Posted on: {new Date(review.createdAt).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 text-black">No reviews written yet.</p>
         )}
       </div>
     </div>
