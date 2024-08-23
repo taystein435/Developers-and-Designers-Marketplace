@@ -65,7 +65,7 @@ export async function POST(req: Request) {
             id: data.id,
             username,
             email,
-            role, // Add the role field here
+            role, 
           },
         });
         return new Response("User has been created!", { status: 200 });
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       try {
         await prisma.user.update({
           where: { id: data.id },
-          data: { username, email, role }, // Add the role field here
+          data: { username, email, role }, 
         });
         return new Response("User has been updated!", { status: 200 });
       } catch (err) {

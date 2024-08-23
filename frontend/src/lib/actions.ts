@@ -23,7 +23,14 @@ type AddProfile = (profileData: {
   bannerImage: string;
   description: string;
 }) => Promise<void>;
-
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  profilePicture: string;
+  bannerImage: string;
+}
 
 export const switchFollow: SwitchFollow = async (profileId) => {
   const { userId: currentUserId } = auth();
@@ -279,4 +286,45 @@ export async function continueConversation(messages: CoreMessage[]) {
   const data = { test: 'hello' };
   const stream = createStreamableValue(result.textStream);
   return { message: stream.value, data };
+}
+
+export async function addUser(userData: {
+  username: string;
+  email: string;
+  role: string;
+  firstName: string;
+  lastName: string;
+  profilePicture?: string;
+  bannerImage?: string;
+  description: string;
+}) {
+  const { username, email, role, firstName, lastName, profilePicture, bannerImage, description } = userData;
+
+  try {
+    // First, create the user
+    const user = await prisma.user.create({
+      data: {
+        username,
+        email,
+        role,
+      },
+    });
+
+    // Then, create the profile associated with the user
+    await prisma.profile.create({
+      data: {
+        userId: user.id,
+        firstName,
+        lastName,
+        profilePicture: profilePicture || '',
+        bannerImage: bannerImage || '',
+        description,
+      },
+    });
+
+    return { success: true,   userId: user.id, };
+  } catch (error) {
+    console.error('Error signing up user:', error);
+    return { success: false };
+  }
 }
