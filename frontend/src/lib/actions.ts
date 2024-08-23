@@ -297,11 +297,16 @@ export async function addUser(userData: {
   profilePicture?: string;
   bannerImage?: string;
   description: string;
+  projects?: {
+    title: string;
+    description: string;
+    images?: string[]; 
+    portfolios?: string[]; 
+  }[];
 }) {
-  const { username, email, role, firstName, lastName, profilePicture, bannerImage, description } = userData;
+  const { username, email, role, firstName, lastName, profilePicture, bannerImage, description, projects } = userData;
 
   try {
-    // First, create the user
     const user = await prisma.user.create({
       data: {
         username,
@@ -310,8 +315,8 @@ export async function addUser(userData: {
       },
     });
 
-    // Then, create the profile associated with the user
-    await prisma.profile.create({
+
+    const profile = await prisma.profile.create({
       data: {
         userId: user.id,
         firstName,
@@ -322,7 +327,38 @@ export async function addUser(userData: {
       },
     });
 
-    return { success: true,   userId: user.id, };
+
+    if (projects && projects.length > 0) {
+      for (const project of projects) {
+        const createdProject = await prisma.project.create({
+          data: {
+            profileId: profile.id,
+            title: project.title,
+            description: project.description,
+          },
+        });
+
+        if (project.images && project.images.length > 0) {
+          await prisma.projectImage.createMany({
+            data: project.images.map((imageUrl) => ({
+              projectId: createdProject.id,
+              imageUrl,
+            })),
+          });
+        }
+
+        if (project.portfolios && project.portfolios.length > 0) {
+          await prisma.portfolio.createMany({
+            data: project.portfolios.map((portfolioUrl) => ({
+              projectId: createdProject.id,
+              portfolioUrl,
+            })),
+          });
+        }
+      }
+    }
+
+    return { success: true, userId: user.id };
   } catch (error) {
     console.error('Error signing up user:', error);
     return { success: false };
