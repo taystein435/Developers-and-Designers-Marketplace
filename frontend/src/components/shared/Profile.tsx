@@ -7,6 +7,7 @@ import React from 'react';
 type ProfileProps = {
   profile: {
     id: string;
+    userId:string;
     firstName: string;
     lastName: string;
     profilePicture: string;
@@ -24,7 +25,7 @@ const Profile = ({ profile }: ProfileProps) => {
     <div>
       <Details profile={profile} />
       <Gigs />
-      <Chat receiverId={profile.id} />
+      <Chat receiverId={profile.userId} />
 
       <ReviewList profileId={profile.id} />
     </div>

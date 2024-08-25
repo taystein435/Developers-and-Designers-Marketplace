@@ -11,7 +11,6 @@ const UserProfilePage = async ({ params }: { params: { profileId: string } }) =>
     },
   });
 
-
   if (!profile) {
     return <p>User not found</p>;
   }
