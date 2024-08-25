@@ -9,7 +9,7 @@ async function getUserData(userId: string) {
     where: { id: userId },
     include: {
       profiles: true,
-      messagesSent: true, // Include messages sent by the user
+      messagesReceived: true, // Include messages sent by the user
       reviews: true, // Include reviews written by the user
     },
   });
@@ -76,9 +76,9 @@ const Dashboard = async ({ params }: { params: { userId: string } }) => {
       {/* Messages Section */}
       <div className="mb-4">
         <h2 className="text-xl font-semibold text-black">Your Messages</h2>
-        {userData.messagesSent.length > 0 ? (
+        {userData.messagesReceived.length > 0 ? (
           <ul className="mt-4 space-y-2">
-            {userData.messagesSent.map((message) => (
+            {userData.messagesReceived.map((message) => (
               <li
                 key={message.id}
                 className="p-3 bg-gray-100 rounded-lg text-black"

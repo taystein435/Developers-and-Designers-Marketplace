@@ -389,3 +389,30 @@ export const fetchReviews = async (profileId: string) => {
     throw new Error('Failed to fetch reviews.');
   }
 };
+
+
+export async function verifyUser(loginData: { email: string; password: string }) {
+  const { email, password } = loginData;
+
+  const fixedPassword = "Password"; // Replace with the actual fixed password
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: { email },
+    });
+
+    if (!user) {
+      return { success: false }; // User not found
+    }
+
+    // Here, we only compare the password with a fixed value
+    if (password === fixedPassword) {
+      return { success: true, userId: user.id };
+    } else {
+      return { success: false }; // Incorrect password
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    return { success: false };
+  }
+}

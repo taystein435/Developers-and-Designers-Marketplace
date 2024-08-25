@@ -48,7 +48,7 @@ export const Navbar = () => {
             <Link href="/help">
               <p className="pt-5">Help</p>
             </Link>
-            <Link href="/signup-dev">
+            <Link href="/signin-dev">
               <p className="pt-5">Developers and Designers</p>
             </Link>
           </SheetContent>
