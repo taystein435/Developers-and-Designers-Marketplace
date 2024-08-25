@@ -157,30 +157,36 @@ export const bookService: BookService = async (profileId, bookingDate, status) =
   }
 };
 
-export const leaveReview: LeaveReview = async (profileId, rating, comment) => {
-  const { userId: currentUserId } = auth();
-
-  if (!currentUserId) {
-    throw new Error("User is not authenticated!");
-  }
-
+export const leaveReview = async (
+  profileId: string,
+  rating: number,
+  comment: string
+) => {
   try {
+    const { userId: currentUserId } = auth(); // Assuming auth() returns { userId: string }
+    
+    if (!currentUserId) {
+      throw new Error('User is not authenticated!');
+    }
+
     await prisma.review.create({
       data: {
-        userId: currentUserId,
-        profileId,
-        rating,
+        userId: currentUserId,   
+        profileId,               
+        rating,                 
         comment,
-        createdAt: new Date(),
+        createdAt: new Date(),   
       },
     });
 
+    // Revalidate the cache or path if necessary
     revalidatePath(`/profile/${profileId}/reviews`);
-  } catch (err) {
-    console.error("Error leaving review:", err);
-    throw new Error("Something went wrong!");
+  } catch (error) {
+    console.error('Error leaving review:', error);
+    throw new Error('Something went wrong while leaving the review.');
   }
 };
+
 
 export const addProfile: AddProfile = async ({ userId, firstName, lastName, profilePicture, bannerImage, description }) => {
   try {
@@ -364,3 +370,22 @@ export async function addUser(userData: {
     return { success: false };
   }
 }
+
+export const fetchReviews = async (profileId: string) => {
+  try {
+    const reviews = await prisma.review.findMany({
+      where: { profileId },
+      include: { user: true }, 
+      orderBy: { createdAt: 'desc' }, 
+    });
+    
+    return reviews.map(review => ({
+      author: review.user.username, 
+      content: review.comment,
+      date: review.createdAt.toISOString().split('T')[0],
+    }));
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    throw new Error('Failed to fetch reviews.');
+  }
+};
