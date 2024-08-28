@@ -1,6 +1,7 @@
 import { Menu, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Sparkles } from 'lucide-react';
 import {
   SignInButton,
   SignedIn,
@@ -77,7 +78,12 @@ export const Navbar = () => {
               <p className="pt-5">FAQs</p>
             </Link>
             <Link href="/chatbot">
-              <p className="pt-5">AI Assistant</p>
+
+            <div className="flex items-center">
+            <Sparkles size={14} />
+            <p className="pt-5">AI Assistant</p>
+            </div>
+         
             </Link>
           </SheetContent>
         </Sheet>
