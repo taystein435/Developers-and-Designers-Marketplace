@@ -1,7 +1,10 @@
+"use client"
 import { Code, PenTool } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import Typewriter from 'typewriter-effect';
+
 
 export const Header = () => {
   const datax = [
@@ -75,6 +78,7 @@ export const Header = () => {
           <p className="text-l m-1 text-center  text-black">
             Connecting top developers and designers with exciting projects.
           </p>
+
           <Button
             className="w-[80vw] mx-auto flex text-white border-none"
             variant="outline"
@@ -84,7 +88,15 @@ export const Header = () => {
         </div>
       </header>
       <div className="">
-            <h1 className="text-5xl px-10 py-10 mt-20 md:text-center md:mt-10 lg:mt-10 lg:text-center  ">Our main goal is to set your business on the hills</h1>
+            <h1 className="text-5xl px-10 py-10 mt-20 md:text-center md:mt-10 lg:mt-10 lg:text-center  ">
+            <Typewriter
+              options={{
+                strings: ["Our main goal is to set your business on the hills"],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+            </h1>
            <div className="flex p-10 gap-10 overflow-auto ">
            {datax.map((item) => (
                <div  key={item.id} className='w-[30vw] h-[20vh]  '>

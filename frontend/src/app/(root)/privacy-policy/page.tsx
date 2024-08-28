@@ -3,7 +3,10 @@ import React from 'react'
 const Privacy
  = () => {
   return (
-    <div>Privacy
+    <div>
+      <section>
+        
+      </section>
         
     </div>
   )
