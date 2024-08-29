@@ -18,7 +18,7 @@ type DetailsProps = {
 };
 
 const Details = ({ profile }: DetailsProps) => {
-  const [followers, setFollowers] = useState(100);
+  const [followers, setFollowers] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const handleFollow = () => {

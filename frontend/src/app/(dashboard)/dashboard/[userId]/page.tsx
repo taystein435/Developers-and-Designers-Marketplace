@@ -2,7 +2,7 @@ import prisma from "@/lib/client";
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
-
+import Chat from '@/components/shared/Chat';
 
 async function getUserData(userId: string) {
   return prisma.user.findUnique({
@@ -87,6 +87,7 @@ const Dashboard = async ({ params }: { params: { userId: string } }) => {
                 <p className="text-sm text-gray-500">
                   Sent on: {new Date(message.sentAt).toLocaleDateString()}
                 </p>
+                <Chat receiverId={message.senderId} />
               </li>
             ))}
           </ul>
@@ -116,6 +117,7 @@ const Dashboard = async ({ params }: { params: { userId: string } }) => {
           <p className="mt-4 text-black">No reviews written yet.</p>
         )}
       </div>
+   
     </div>
   );
 };

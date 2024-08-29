@@ -29,7 +29,7 @@ export const Footer = () => {
           <Link href="/faq">
             <p className="hover:text-gray-400 cursor-pointer">FAQs</p>
           </Link>
-          <Link href="/support">
+          <Link href="/">
             <p className="hover:text-gray-400 cursor-pointer">Support</p>
           </Link>
         </div>
@@ -40,10 +40,10 @@ export const Footer = () => {
           <Link href="/designers">
             <p className="hover:text-gray-400 cursor-pointer">Designers</p>
           </Link>
-          <Link href="/portfolio">
+          <Link href="/">
             <p className="hover:text-gray-400 cursor-pointer">Portfolio</p>
           </Link>
-          <Link href="/blog">
+          <Link href="/">
             <p className="hover:text-gray-400 cursor-pointer">Blog</p>
           </Link>
         </div>

@@ -37,20 +37,17 @@ export const Navbar = () => {
                 <SignInButton />
               </Button>
             </SignedOut>
-            <Link href="/details">
-              <h1 className="pt-10">Profile</h1>
-            </Link>
-            <Link href="/details">
-              <p className="pt-5">Projects</p>
-            </Link>
-            <Link href="/settings">
-              <p className="pt-5">Settings</p>
-            </Link>
-            <Link href="/help">
-              <p className="pt-5">Help</p>
+            <Link href="/messages">
+              <p className="pt-5">Messages</p>
             </Link>
             <Link href="/signin-dev">
               <p className="pt-5">Developers and Designers</p>
+            </Link>
+            <Link href="/payment">
+              <p className="pt-5">Payments</p>
+            </Link>
+            <Link href="/admin">
+              <p className="pt-5">Admin</p>
             </Link>
           </SheetContent>
         </Sheet>

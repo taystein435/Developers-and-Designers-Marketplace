@@ -39,7 +39,7 @@ export default function Chatbot() {
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto">
       {messages.map((message, index) => (
-        <div key={index} className="whitespace-pre-wrap">
+        <div key={index} className="whitespace-pre-wrap ">
           {message.role === 'user' ? 'User: ' : 'DevHub AI: '}
           {message.content as string}
         </div>
